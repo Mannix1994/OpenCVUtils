@@ -5,7 +5,7 @@ namespace Utils{
     class SaveMat {
     public:
         /**
-         * 以二进制文件来存储Mat数据；读取这个函数存储的文件，需要用到下面的save函数。
+         * 以二进制文件来存储Mat数据；读取这个函数存储的文件，需要用到下面的read函数。
          * @param fileName 文件名(后缀推荐为.mb)
          * @param src 要存储的mat
          */
