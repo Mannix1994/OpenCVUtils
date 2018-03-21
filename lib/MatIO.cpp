@@ -26,7 +26,7 @@ void Utils::write(std::string fileName, cv::Mat src) {
     ofstream out(fileName, ios::binary);
     ASSERT(out.is_open(), "打开文件" + fileName + "失败");
 
-    //写入一个表示数字，表示为这个类型的数据
+    //写入一个标志tag，表示为这个类型的数据
     char tag = 'm';
     out.write(&tag, sizeof(char));
 
