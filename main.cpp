@@ -1,5 +1,5 @@
 #include <opencv2/opencv.hpp>
-#include "SaveMat.h"
+#include "MatIO.h"
 #include "CompareMats.h"
 #include "tools.h"
 
@@ -12,16 +12,16 @@ void testSaveMat();
 
 int main( int argc, char** argv )
 {
-    testSaveMat();
     testCompareMats();
+    testSaveMat();
     return 0;
 }
 
 void testCompareMats(){
 
     //test case 1
-    Mat mat = imread("image170.jpg");
-    Mat mat1 = imread("image1701.jpg");
+    Mat mat = imread("image170.bmp");
+    Mat mat1 = imread("image1701.bmp");
 
     //test case 1.1
     CompareMats cm(mat,mat);
@@ -29,7 +29,6 @@ void testCompareMats(){
 
     //test case 1.2
     CompareMats cm2(mat,mat1);
-    cm2.saveReport("test");
     ASSERT(!cm2.same(),"测试失败");
 
     //test case2
@@ -49,16 +48,16 @@ void testCompareMats(){
 
 void testSaveMat(){
     //test case 1
-    Mat mat = imread("image170.bmp");
-    SaveMat::save("mat0.mb",mat);
-    Mat m0 = SaveMat::read("mat0.mb");
+    Mat mat = imread("image170.jpg");
+    write("mat0.mb", mat);
+    Mat m0 = read("mat0.mb");
     CompareMats cm0(mat,m0);
     ASSERT(cm0.same(),"测试失败");
 
     //test case 2
     Mat mat1(500,500,CV_32FC2,Scalar(1,5,2.2));
-    SaveMat::save("mat1.mb",mat1);
-    Mat m1 = SaveMat::read("mat1.mb");
+    write("mat1.mb", mat1);
+    Mat m1 = read("mat1.mb");
     CompareMats cm1(mat1,m1);
     ASSERT(cm1.same(),"测试失败");
 

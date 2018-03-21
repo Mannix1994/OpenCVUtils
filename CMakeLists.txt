@@ -1,7 +1,7 @@
 # required cmake version
 cmake_minimum_required(VERSION 2.8)
 # CMakeLists.txt for G4CU project
-project(SaveMat)
+project(OpenCVUtils)
 
 set(CMAKE_CXX_COMPILER clang++)
 #set(CMAKE_BUILD_TYPE "Release")
