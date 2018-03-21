@@ -20,8 +20,8 @@ int main( int argc, char** argv )
 void testCompareMats(){
 
     //test case 1
-    Mat mat = imread("image170.bmp");
-    Mat mat1 = imread("image1701.bmp");
+    Mat mat = imread("image170.jpg");
+    Mat mat1 = imread("image1701.jpg");
 
     //test case 1.1
     CompareMats cm(mat,mat);
@@ -29,6 +29,7 @@ void testCompareMats(){
 
     //test case 1.2
     CompareMats cm2(mat,mat1);
+    cm2.saveReport("test");
     ASSERT(!cm2.same(),"测试失败");
 
     //test case2
