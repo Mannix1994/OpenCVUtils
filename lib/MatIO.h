@@ -1,5 +1,5 @@
-#ifndef SAVEMAT_H
-#define SAVEMAT_H
+#ifndef MATIO_H
+#define MATIO_H
 
 #include <opencv2/opencv.hpp>
 
@@ -21,4 +21,4 @@ namespace Utils {
 }
 
 
-#endif //SAVEMAT_H
+#endif //MATIO_H
