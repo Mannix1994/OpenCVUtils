@@ -49,23 +49,27 @@ bool CompareMats::same() {
 
 /**
  * 比较Mat是否相同;
- * 这个函数利用了非常巧妙的方式来比较不同类型的mat;不管mat里面存储的是单通道
- * 还是多通道，通道分量的类型uchar、int、float还是double，mat中的每个元素所
- * 占内存总是uchar(8位)的整数倍，因此，可以把该元素看成一个uchar数组。箬要比
- * 较两个mat中对应位置的元素是否相等，可以先求得各自指向该元素的uchar数组的首
- * 地址，然后用一个for循环来比较这两个数组，若完全相同，则这两个mat中对应位置
- * 的元素是相等的，否则，不相等。
  * @param mat1 mat1
  * @param mat2 mat2
  */
 void CompareMats::compare(const Mat mat1, const Mat mat2) {
-    //mat(i,j)，也就是一个元素，所占的字节数
+    /**
+     * 这个部分利用了非常巧妙的方式来比较不同类型的mat;不管mat里面存储的是单通道
+     * 还是多通道，通道分量的类型uchar、int、float还是double，mat中的每个元素所
+     * 占内存总是uchar(8位)的整数倍，因此，可以把该元素看成一个uchar数组。箬要比
+     * 较两个mat中对应位置的元素是否相等，可以先求得各自指向该元素的uchar数组的首
+     * 地址，然后用一个for循环来比较这两个数组，若完全相同，则这两个mat中对应位置
+     * 的元素是相等的，否则，不相等。
+     * 用来比较jpeg格式的图片时会出错。
+     */
+
     //参考链接：http://blog.csdn.net/dcrmg/article/details/52294259
-    size_t elemSize = mat1.elemSize();
-    uchar *ptrCols1;//mat1行首指针
-    uchar *ptrCols2;//mat2行首指针
-    uchar *array1;//mat1元数数组首指针
-    uchar *array2;//mat1元数数组首指针
+    size_t elemSize = mat1.elemSize();//mat(i,j)，也就是一个元素，所占的字节数
+    uchar *ptrCols1 = nullptr;//mat1行首指针
+    uchar *ptrCols2 = nullptr;//mat2行首指针
+    uchar *array1 = nullptr;//mat1元数数组首指针
+    uchar *array2 = nullptr;//mat1元数数组首指针
+
     for (int i = 0; i < mat1.rows; i++) {
         //获取每行行首的指针
         ptrCols1 = const_cast<uchar *>(mat1.ptr<uchar>(i));
@@ -89,7 +93,7 @@ void CompareMats::compare(const Mat mat1, const Mat mat2) {
                 _differentCount++;
                 _differentPoints.emplace_back(Point(i, j));
 
-                _mask.at<Vec3b>(j, i) = Vec3b(0, 255, 255);
+                _mask.at<Vec3b>(i, j) = Vec3b(0, 255, 255);
             }
         }
     }
