@@ -12,9 +12,9 @@ MatIO.h中包含了一个save函数和read函数，可以仅仅通过
 一个save函数和一个read函数就能完成任意类型的Mat的存储
 和读取。
 3. CvText.h  
-CvText.h中包含了一个类CvText。CvText的作用是解决Ope
-nCV输出中文乱码的问题，经过测试，能完美显示中英文。这个
-类依赖于freetype库。
+CvText.h中包含了一个类CvText。CvText的作用是解决OpenCV
+输出中文乱码的问题，经过测试，能完美显示中英文。这个类依赖于
+freetype库。
 ## 二、如何使用
 使用前将头文件和对应的cpp文件拷贝到你的项目中。  
 1. CompareMats.h  
