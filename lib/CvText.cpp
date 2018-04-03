@@ -9,8 +9,10 @@ CvText::CvText(const char *fontName) {
     ASSERT(fontName != nullptr,"字体名称为空");
 
     // 打开字库文件, 创建一个字体
-    if (FT_Init_FreeType(&m_library)) throw;
-    if (FT_New_Face(m_library, fontName, 0, &m_face)) throw;
+    ASSERT(FT_Init_FreeType(&m_library)==0,"初始化字库失败，请检查freetype库配置是否正确");
+    ASSERT(FT_New_Face(m_library, fontName, 0, &m_face)==0,
+           "载入字体失败，请检查字体文件是否存在");
+    //选择字符编码
     FT_Select_Charmap(m_face,FT_ENCODING_UNICODE);
 
     // 设置字体输出参数
@@ -157,8 +159,7 @@ void CvText::putWChar(cv::Mat &frame, wchar_t wc, cv::Point &pos, cv::Scalar col
                 int r = (img.origin == 0) ? pos.y - (rows - 1 - i) : pos.y + i;;
                 int c = pos.x + j;
 
-                if (r >= 0 && r < img.height
-                    && c >= 0 && c < img.width) {
+                if (r >= 0 && r < img.height && c >= 0 && c < img.width) {
                     CvScalar scalar = cvGet2D(&img, r, c);
 
                     // 进行色彩融合
