@@ -26,9 +26,9 @@ void Utils::write(std::string fileName, cv::Mat src) {
     ofstream out(fileName, ios::binary);
     ASSERT(out.is_open(), "打开文件" + fileName + "失败");
 
-    //写入一个标志tag，表示为这个类型的数据
-    char tag = 'm';
-    out.write(&tag, sizeof(char));
+    //写入文件类型，表示为这个类型的数据，长度为两字节
+    char fileType[3] = "mb";
+    out.write(fileType, 2*sizeof(char));
 
     //写入Mat头
     out.write((char *) &matHeader, sizeof(MatHeader));
@@ -46,10 +46,13 @@ cv::Mat Utils::read(std::string fileName) {
     ifstream in(fileName, ios::binary);
     ASSERT(in.is_open(), "打开文件" + fileName + "失败");
 
-    //读取第一个字节，看是不是通过本方法存储的mat
-    char tag;
-    in.read(&tag, sizeof(char));
-    ASSERT(tag == 'm', fileName + "非Mat类型的数据");
+    char fileType[3]={'\0','\0','\0'};//初始化一个默认值
+
+    //读取前两字节
+    in.read(fileType, 2*sizeof(char));
+
+    //判断是否是"mb"这种文件
+    ASSERT(strcmp(fileType,"mb") == 0, fileName + "非Mat类型的数据");
 
     //读取Mat头
     MatHeader matHeader{0, 0, 0};
