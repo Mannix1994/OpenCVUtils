@@ -71,8 +71,10 @@ void testCvText() {
     //test case 1
     Mat mat = imread("image170.jpg");
     CvText text("simhei.ttf");
-    string str = "EnglishTest中文测试";
-    text.putText(mat,str,Point(5,25),Scalar(255,255,255));
+    string str = "EnglishTest中文测试"; //替换成需要输出的字符串
+    Point pos(5,25);                   //输出起始位置
+    Scalar color(255,255,255);         //字的颜色，默认为白色
+    text.putText(mat,str,pos,color);
     Mat base = imread("CvText.bmp");
     CompareMats cm(base,mat);
     ASSERT(cm.same(),"测试失败");
