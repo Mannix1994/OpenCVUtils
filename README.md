@@ -11,13 +11,13 @@ bug，不能正确的比较类型为jpg格式的图片文件。
 MatIO.h中包含了一个save函数和read函数，可以仅仅通过
 一个save函数和一个read函数就能完成任意类型的Mat的存储
 和读取。
-3. CvText.h
+3. CvText.h  
 CvText.h中包含了一个类CvText。CvText的作用是解决Ope
 nCV输出中文乱码的问题，经过测试，能完美显示中英文。这个
 类依赖于freetype库。
 ## 二、如何使用
-使用前将头文件和对应的cpp文件拷贝到你的项目中。
-1. CompareMats.h
+使用前将头文件和对应的cpp文件拷贝到你的项目中。  
+1. CompareMats.h  
 ```
 #include "CompareMats.h"
 using namespace Utils;
@@ -30,7 +30,7 @@ void func(){
     //其他代码
 }
 ```
-2. MatIO.h
+2. MatIO.h  
 ```
 #include "MatIO.h"
 using namespace Utils;
@@ -44,8 +44,8 @@ void func(){
     //其他代码
 }
 ```
-
-3. CvText.h
+  
+3. CvText.h  
 ```
 #include "CvText.h"
 using namespace Utils;
@@ -60,6 +60,7 @@ void func{
     //其他代码
 }
 ```
+
 ## 三、关于作者
 ```javascript
   var whoAmI = {
