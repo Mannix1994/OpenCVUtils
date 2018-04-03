@@ -79,5 +79,5 @@ void testCvText() {
     CompareMats cm(base,mat);
     ASSERT(cm.same(),"测试失败");
 
-    printf("SaveMat测试成功\n");
+    printf("CvText测试成功\n");
 }
