@@ -26,7 +26,7 @@ void func(){
     //其他代码
     CompareMats cm(mat1,mat2);//初始化
     cout<<cm.report()<<endl;//输出报告
-    //还有非常多的方法在CompareMats.h中的说明
+    //还有非常多的方法在CompareMats.h中说明
     //其他代码
 }
 ```
