@@ -10,9 +10,9 @@ namespace Utils {
      * 保存mat头的关键信息
      */
     typedef struct {
-        int rows;
-        int cols;
-        int type;
+        int rows;//行数
+        int cols;//列数
+        int type;//类型
     } MatHeader;
 }
 

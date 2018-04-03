@@ -1,4 +1,5 @@
 #include <opencv2/opencv.hpp>
+#include <CvText.h>
 #include "MatIO.h"
 #include "CompareMats.h"
 #include "tools.h"
@@ -9,11 +10,13 @@ using namespace Utils;
 
 void testCompareMats();
 void testSaveMat();
+void testCvText();
 
 int main( int argc, char** argv )
 {
     testCompareMats();
     testSaveMat();
+    testCvText();
     return 0;
 }
 
@@ -60,6 +63,19 @@ void testSaveMat(){
     Mat m1 = read("mat1.mb");
     CompareMats cm1(mat1,m1);
     ASSERT(cm1.same(),"测试失败");
+
+    printf("SaveMat测试成功\n");
+}
+
+void testCvText() {
+    //test case 1
+    Mat mat = imread("image170.jpg");
+    CvText text("simhei.ttf");
+    string str = "EnglishTest中文测试";
+    text.putText(mat,str,Point(5,25),Scalar(255,255,255));
+    Mat base = imread("CvText.bmp");
+    CompareMats cm(base,mat);
+    ASSERT(cm.same(),"测试失败");
 
     printf("SaveMat测试成功\n");
 }
