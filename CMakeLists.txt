@@ -1,7 +1,7 @@
 # required cmake version
 cmake_minimum_required(VERSION 2.8)
 # 项目名
-project(MergePicture)
+project(OpenCVUtils)
 # 编译器
 set(CMAKE_CXX_COMPILER g++)
 # 编译类型
