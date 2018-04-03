@@ -47,6 +47,8 @@ void func(){
   
 3. CvText.h  
 ```
+//使用这个类时，需要配置freetype库。对于含有  
+//CMakeLists.txt的项目，请参考本项目中的配置。
 #include "CvText.h"
 using namespace Utils;
 void func{
