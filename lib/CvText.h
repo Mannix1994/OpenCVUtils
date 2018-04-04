@@ -35,6 +35,8 @@ namespace Utils {
          * @param fontName 字体名称
          * @param encoding putText函数的参数中的文本编码，
          * 需要和代码的编码一致，否则会出现乱码。
+         * 目前仅支持UTF-8(很多IDE的默认编码)和GB2312(Visual
+         * Studio中文环境下的默认编码)这两种编码。
          */
         explicit CvText(const char *fontName, TextEncoding encoding = TextEncoding::UTF8);
 
