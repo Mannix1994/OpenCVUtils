@@ -9,17 +9,16 @@ CvText::CvText(const char *fontName) {
     ASSERT(fontName != nullptr,"字体名称为空");
 
     // 打开字库文件, 创建一个字体
-    ASSERT(FT_Init_FreeType(&m_library)==0,
-           "初始化字库失败，请检查freetype库配置是否正确");
+    ASSERT(FT_Init_FreeType(&m_library)==0,"初始化字库失败，请检查freetype库配置是否正确");
     ASSERT(FT_New_Face(m_library, fontName, 0, &m_face)==0,
            "载入字体失败，请检查字体文件是否存在");
     //选择字符编码
     FT_Select_Charmap(m_face,FT_ENCODING_UNICODE);
 
     // 设置字体输出参数
-    restoreFont();
+    resetTextStyle();
 
-    // 设置C语言的字符集环境
+//     //设置C语言的字符集环境
 //    setlocale(LC_ALL, "zh_CN.utf8");
 }
 
@@ -29,41 +28,24 @@ CvText::~CvText() {
     FT_Done_FreeType(m_library);
 }
 
-// 设置字体属性
-void CvText::setFont(int *type, cv::Scalar *size, bool *underline, float *diaphaneity) {
-    // 参数合法性检查
-    if (type) {
-        if (type >= 0) m_fontType = *type;
-    }
-    if (size) {
-        m_fontSize.val[0] = fabs(size->val[0]);
-        m_fontSize.val[1] = fabs(size->val[1]);
-        m_fontSize.val[2] = fabs(size->val[2]);
-        m_fontSize.val[3] = fabs(size->val[3]);
-    }
-    if (underline) {
-        m_fontUnderline = *underline;
-    }
-    if (diaphaneity) {
-        m_fontDiaphaneity = *diaphaneity;
-    }
+// 设置文本属性
+void CvText::setTextStyle(int fontSize, float spaceSize, float separatorSize, float fontDiaphaneity) {
+    if(fontSize>0)
+        m_fontSize = fontSize;
+    if(spaceSize>0)
+        m_spaceRatio = spaceSize;
+    if(separatorSize>0)
+        m_separatorRatio = separatorSize;
+    if(fontDiaphaneity>0)
+        m_fontDiaphaneity = fontDiaphaneity;
 }
 
-// 恢复默认的字体设置
-void CvText::restoreFont() {
-    m_fontType = 0;             // 字体类型(不支持)
-
-    m_fontSize.val[0] = 15;     // 字体大小
-    m_fontSize.val[1] = 0.5;    // 空白字符大小比例
-    m_fontSize.val[2] = 0.1;    // 间隔大小比例
-    m_fontSize.val[3] = 0;      // 旋转角度(不支持)
-
-    m_fontUnderline = false;    // 下画线(不支持)
-
-    m_fontDiaphaneity = 1.0;    // 色彩比例(可产生透明效果)
-
-    // 设置字符大小
-    FT_Set_Pixel_Sizes(m_face, (FT_UInt) m_fontSize.val[0], 0);
+// 恢复默认的文本设置
+void CvText::resetTextStyle() {
+    m_fontSize = 20;        // 字体大小
+    m_spaceRatio = 0.5;     // 空白字符大小比例
+    m_separatorRatio = 0.1;     // 间隔大小比例
+    m_fontDiaphaneity = 1.0;    // 透明度
 }
 
 
@@ -73,7 +55,6 @@ int CvText::putText(cv::Mat &frame, std::string text, cv::Point pos, cv::Scalar 
 
 int CvText::putText(cv::Mat &frame, const char *text, cv::Point pos, cv::Scalar color) {
 
-
     if (frame.empty())
         return -1;
     if (text == nullptr)
@@ -82,20 +63,19 @@ int CvText::putText(cv::Mat &frame, const char *text, cv::Point pos, cv::Scalar 
     wchar_t *w_str ;
     int count = char2Wchar(text, w_str);
     //
-    int i=0;
-    for (; i<count; ++i) {
+    for (int i=0; i<count; ++i) {
         wchar_t wc = w_str[i];
         //如果是ascii字符(范围0~127)，调整字体大小
-        //因为ascii字符在同样的m_fontSize下更小，所以要放大一点
+        //因为ascii字符在同样的m_fontSize下更小，所以要放大1.15倍
         if(wc<128)
-            FT_Set_Pixel_Sizes(m_face, (FT_UInt)(m_fontSize.val[0]*1.15), 0);
+            FT_Set_Pixel_Sizes(m_face, (FT_UInt)(m_fontSize*1.15), 0);
         else
-            FT_Set_Pixel_Sizes(m_face, (FT_UInt)m_fontSize.val[0], 0);
+            FT_Set_Pixel_Sizes(m_face, (FT_UInt)m_fontSize, 0);
         // 输出当前的字符
         putWChar(frame, wc, pos, color);
     }
     delete(w_str);
-    return i;
+    return count;
 }
 
 /**
@@ -109,31 +89,23 @@ int CvText::char2Wchar(const char *&src, wchar_t *&dst, const char *locale)
 {
     if (src == nullptr) {
         dst = nullptr;
-        return 0;
+        return -1;
     }
-
     // 设置C语言的字符集环境
     setlocale(LC_CTYPE, locale);
-
     // 得到转化为需要的宽字符大小
     int w_size = (int)mbstowcs(nullptr, src, 0) + 1;
-
     // w_size = 0 说明mbstowcs返回值为-1。即在运行过程中遇到了非法字符(很有可能是locale没有设置正确)
     if (w_size == 0) {
         dst = nullptr;
         return -1;
     }
-
     dst = new wchar_t[w_size];
     if (dst == nullptr) {
         return -1;
     }
 
-    auto ret = (int)mbstowcs(dst, src, strlen(src)+1);
-    if (ret <= 0) {
-        return -1;
-    }
-    return ret;
+    return (int)mbstowcs(dst, src, strlen(src)+1);
 }
 
 
@@ -175,8 +147,8 @@ void CvText::putWChar(cv::Mat &frame, wchar_t wc, cv::Point &pos, cv::Scalar col
     } // end for  
 
     // 修改下一个字的输出位置
-    double space = m_fontSize.val[0] * m_fontSize.val[1];
-    double sep = m_fontSize.val[0] * m_fontSize.val[2];
+    double space = m_fontSize * m_spaceRatio;
+    double sep = m_fontSize * m_separatorRatio;
 
     pos.x += (int) ((cols ? cols : space) + sep);
 }

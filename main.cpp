@@ -75,6 +75,7 @@ void testCvText() {
     Point pos(5,25);                   //输出起始位置
     Scalar color(255,255,255);         //字的颜色，默认为白色
     text.putText(mat,str,pos,color);
+//    imwrite("CvText.bmp",mat);
     Mat base = imread("CvText.bmp");
     CompareMats cm(base,mat);
     ASSERT(cm.same(),"测试失败");
