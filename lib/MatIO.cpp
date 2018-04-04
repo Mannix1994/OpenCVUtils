@@ -52,7 +52,7 @@ cv::Mat Utils::read(std::string fileName) {
     in.read(fileType, 2*sizeof(char));
 
     //判断是否是"mb"这种文件
-    ASSERT(strcmp(fileType,"mb") == 0, fileName + "非Mat类型的数据");
+    ASSERT(strcmp(fileType, "mb") == 0, fileName + "非Mat类型的数据");
 
     //读取Mat头
     MatHeader matHeader{0, 0, 0};

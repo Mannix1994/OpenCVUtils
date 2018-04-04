@@ -8,25 +8,25 @@
 using namespace Utils;
 
 CvText::CvText(const char *fontName,TextEncoding encoding) {
-    ASSERT(fontName != nullptr,"字体名称为空");
+    ASSERT(fontName != nullptr, "字体名称为空");
 
     // 打开字库文件, 创建一个字体
-    ASSERT(FT_Init_FreeType(&m_library)==0,"初始化字库失败，请检查freetype库配置是否正确");
-    ASSERT(FT_New_Face(m_library, fontName, 0, &m_face)==0,
+    ASSERT(FT_Init_FreeType(&m_library) == 0, "初始化字库失败，请检查freetype库配置是否正确");
+    ASSERT(FT_New_Face(m_library, fontName, 0, &m_face) == 0,
            "载入字体失败，请检查字体文件是否存在");
 
     //选择字符编码
     switch (encoding){
         case UTF8:
             FT_Select_Charmap(m_face,FT_ENCODING_UNICODE);
-            m_textEncoding = "zh_CN.UTF-8";
+            m_textEncoding = "zh_CN.utf8";
             break;
         case GB2312:
             FT_Select_Charmap(m_face,FT_ENCODING_GB2312);
             m_textEncoding = "zh_CN.gb2312";
             break;
         default:
-            ASSERT(false,"不支持的文本编码");
+            ASSERT(false, "不支持的文本编码");
     }
 
     // 设置字体输出参数
@@ -104,11 +104,11 @@ int CvText::char2Wchar(const char *&src, wchar_t *&dst, const char *locale)
     }
     // 设置C语言的字符集环境
     char *result = setlocale(LC_CTYPE, locale);
-    // 检查设置编码是否成功，失败的话抛出异常"设置字符编码失败"
-    // 对于zh_CN.GBK或者zh_CN.GB2312编码,如果设置编码失败，
-    // 先安装中文语言包，然后根据下面链接来设置下：
-    // https://blog.csdn.net/wenwenxiong/article/details/17116791
-    ASSERT(result != nullptr,"设置字符编码失败");
+    // 检查设置编码是否成功，失败的话抛出异常"设置字符编码失败"等信息
+    ASSERT(result != nullptr, "设置字符编码失败。\n"
+                              "对于zh_CN.GBK或者zh_CN.GB2312编码，"
+                              "先安装中文语言包，然后根据下面链接来设置：\n"
+                              "https://blog.csdn.net/wenwenxiong/article/details/17116791\n");
     // 得到转化为需要的宽字符大小
     int w_size = (int)mbstowcs(nullptr, src, 0) + 1;
     // w_size = 0 说明mbstowcs返回值为-1。即在运行过程中遇到了非法字符(很有可能是locale没有设置正确)

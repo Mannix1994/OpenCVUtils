@@ -28,11 +28,11 @@ void testCompareMats(){
 
     //test case 1.1
     CompareMats cm(mat,mat);
-    ASSERT(cm.same(),"测试失败");
+    ASSERT(cm.same(), "测试失败");
 
     //test case 1.2
     CompareMats cm2(mat,mat1);
-    ASSERT(!cm2.same(),"测试失败");
+    ASSERT(!cm2.same(), "测试失败");
 
     //test case2
     Mat mat2(500,500,CV_32FC2);
@@ -41,11 +41,11 @@ void testCompareMats(){
 
     //test case 2.1
     CompareMats cm3(mat2,mat2);
-    ASSERT(cm3.same(),"测试失败");
+    ASSERT(cm3.same(), "测试失败");
 
     //test case 2.2
     CompareMats cm4(mat2,mat3);
-    ASSERT(!cm4.same(),"测试失败");
+    ASSERT(!cm4.same(), "测试失败");
     printf("CompareMats测试成功\n");
 }
 
@@ -55,14 +55,14 @@ void testSaveMat(){
     write("mat0.mb", mat);
     Mat m0 = read("mat0.mb");
     CompareMats cm0(mat,m0);
-    ASSERT(cm0.same(),"测试失败");
+    ASSERT(cm0.same(), "测试失败");
 
     //test case 2
     Mat mat1(500,500,CV_32FC2,Scalar(1,5,2.2));
     write("mat1.mb", mat1);
     Mat m1 = read("mat1.mb");
     CompareMats cm1(mat1,m1);
-    ASSERT(cm1.same(),"测试失败");
+    ASSERT(cm1.same(), "测试失败");
 
     printf("SaveMat测试成功\n");
 }
@@ -78,7 +78,7 @@ void testCvText() {
 //    imwrite("CvText.bmp",mat);
     Mat base = imread("CvText.bmp");
     CompareMats cm(base,mat);
-    ASSERT(cm.same(),"测试失败");
+    ASSERT(cm.same(), "测试失败");
 
     printf("CvText测试成功\n");
 }

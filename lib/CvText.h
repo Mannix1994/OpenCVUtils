@@ -35,8 +35,8 @@ namespace Utils {
          * @param fontName 字体名称
          * @param encoding putText函数的参数中的文本编码，
          * 需要和代码的编码一致，否则会出现乱码。
-         * 目前仅支持UTF-8(很多IDE的默认编码)和GB2312(Visual
-         * Studio中文环境下的默认编码)这两种编码。
+         * 目前仅支持UTF-8(很多IDE的源码默认编码)和GB2312(
+         * Visual Studio中文环境下的默认编码)这两种编码。
          */
         explicit CvText(const char *fontName, TextEncoding encoding = TextEncoding::UTF8);
 
@@ -97,19 +97,19 @@ namespace Utils {
          * @param locale 语言环境，mbstowcs函数依赖此值来判断src的编码方式
          * @return 运行成功返回0,否则返回-1
          */
-        int char2Wchar(const char *&src, wchar_t *&dst, const char *locale = "zh_CN.utf8");
+        int char2Wchar(const char *&src, wchar_t *&dst, const char *locale = "");
 
         //私有变量区
     private:
-        FT_Library m_library;       // 字库
-        FT_Face m_face;             // 字体
+        FT_Library m_library;           // 字库
+        FT_Face m_face;                 // 字体
 
         // 默认的字体输出参数
-        int     m_fontSize;         // 字体大小
-        float   m_spaceRatio;       // 空白字符大小比例
-        float   m_separatorRatio;   // 字符间分隔距离大小比例
-        float   m_fontDiaphaneity;  // 透明度
-        std::string m_textEncoding; // 文本编码
+        int m_fontSize;                 // 字体大小
+        float m_spaceRatio;             // 空白字符大小比例
+        float m_separatorRatio;         // 字符间分隔距离大小比例
+        float m_fontDiaphaneity;        // 透明度
+        std::string m_textEncoding;     // 文本编码
     };
 }
 
