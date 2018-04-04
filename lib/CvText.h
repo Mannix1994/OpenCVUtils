@@ -26,6 +26,9 @@ namespace Utils {
     class CvText {
     public:
 
+        /**
+         * 文本编码
+         */
         typedef enum {
             UTF8, GB2312
         } TextEncoding;
