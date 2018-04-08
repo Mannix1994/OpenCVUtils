@@ -11,7 +11,8 @@ CvText::CvText(const char *fontName,TextEncoding encoding) {
     ASSERT(fontName != nullptr, "字体名称为空");
 
     // 打开字库文件, 创建一个字体
-    ASSERT(FT_Init_FreeType(&m_library) == 0, "初始化字库失败，请检查freetype库配置是否正确");
+    ASSERT(FT_Init_FreeType(&m_library) == 0,
+           "初始化字库失败，请检查freetype库配置是否正确");
     ASSERT(FT_New_Face(m_library, fontName, 0, &m_face) == 0,
            "载入字体失败，请检查字体文件是否存在");
 
