@@ -39,9 +39,24 @@ void func(){
     //其他代码
     //保存
     bool saved = write("test.mb",mat);
-    if(saved)
+    if(saved){
+        //保存成功
+    }
+    else{
+        //保存失败；可在控制台查看出错原因。
+    }
+    //其他代码
+}
+void func1(){
+    //其他代码
     //读取
     Mat m = read("test.mb");
+    if(m.empty()){
+        //mat为空，读取失败；可在控制台查看出错原因。
+    }
+    else{
+        //读取成功
+    }
     //其他代码
 }
 ```

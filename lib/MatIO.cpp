@@ -24,7 +24,7 @@ bool Utils::write(std::string fileName, cv::Mat src) {
 
     //打开文件
     ofstream out(fileName, ios::binary);
-    IF(out.is_open(), "打开文件" + fileName + "失败",false);
+    IF(out.is_open(), "写入文件" + fileName + "失败",false);
 
     //写入文件类型，表示为这个类型的数据，长度为两字节
     char fileType[3] = "mb";
@@ -46,7 +46,7 @@ bool Utils::write(std::string fileName, cv::Mat src) {
 cv::Mat Utils::read(std::string fileName) {
     //打开文件
     ifstream in(fileName, ios::binary);
-    IF(in.is_open(),"打开文件" + fileName + "失败",Mat());
+    IF(in.is_open(),"读取文件" + fileName + "失败",Mat());
 
     char fileType[3]={'\0','\0','\0'};//初始化一个默认值
 
