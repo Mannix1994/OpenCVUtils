@@ -38,7 +38,8 @@ using namespace Utils;
 void func(){
     //其他代码
     //保存
-    write("test.mb",mat);
+    bool saved = write("test.mb",mat);
+    if(saved)
     //读取
     Mat m = read("test.mb");
     //其他代码

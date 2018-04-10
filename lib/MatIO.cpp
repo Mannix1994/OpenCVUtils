@@ -40,7 +40,7 @@ bool Utils::write(std::string fileName, cv::Mat src) {
     out.flush();
     out.close();
 
-    return 0;
+    return true;
 }
 
 cv::Mat Utils::read(std::string fileName) {
