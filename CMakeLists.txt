@@ -16,7 +16,7 @@ find_package(OpenCV REQUIRED)
 #set(CMAKE_RUNTIME_OUTPUT_DIRECTORY /home/creator/Projects/C++/REN/run/数据)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ../run)
 # 包含OpenCV头文件目录
-include_directories(${OPENCV_INCLUDE_DIRS})
+include_directories(${OpenCV_INCLUDE_DIRS})
 # 包含freetype的头文件目录
 include_directories("/usr/local/include/freetype2")
 # 包含当前项目的头文件项目路径
