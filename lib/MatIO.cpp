@@ -19,6 +19,7 @@ namespace Utils {
 bool Utils::write(std::string fileName, cv::Mat src) {
     IF(!fileName.empty(), "文件名为空",false);
     IF(!src.empty(), "mat为空",false);
+    CV_Assert(src.dims == 2);
     MatHeader matHeader{src.rows, src.cols, src.type()};
 //    printf("%d %d %d\n",matHeader.rows,matHeader.cols,matHeader.type);
 
@@ -35,7 +36,8 @@ bool Utils::write(std::string fileName, cv::Mat src) {
 
     //写入数据
     //http://blog.csdn.net/dcrmg/article/details/52294259
-    out.write((char *) src.data, src.rows * src.cols * src.elemSize());
+    //https://www.cnblogs.com/wangguchangqing/p/4016179.html
+    out.write((char *) src.data, src.rows * src.step[0]);
 
     out.flush();
     out.close();
