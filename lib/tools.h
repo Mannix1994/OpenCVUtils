@@ -31,7 +31,7 @@ void warning(const std::string &filePath, const std::string &function,
  */
 #define IF(condition,false_message,false_value) \
     if (!(condition)){\
-        std::cerr<<(false_message)<<std::endl; \
+        std::cerr<<"Line:"<<__LINE__<<">>"<<(false_message)<<std::endl; \
         return (false_value); \
     }
 #endif //TOOLS_H

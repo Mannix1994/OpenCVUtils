@@ -19,7 +19,7 @@ namespace Utils {
 bool Utils::write(std::string fileName, cv::Mat src) {
     IF(!fileName.empty(), "文件名为空",false);
     IF(!src.empty(), "mat为空",false);
-    CV_Assert(src.dims == 2);
+    IF(src.dims == 2,"不是二维Mat", false);
     MatHeader matHeader{src.rows, src.cols, src.type()};
 //    printf("%d %d %d\n",matHeader.rows,matHeader.cols,matHeader.type);
 
@@ -67,7 +67,7 @@ cv::Mat Utils::read(std::string fileName) {
     Mat mat(matHeader.rows, matHeader.cols, matHeader.type);
 
     //写入数据
-    in.read((char *) mat.data, mat.rows * mat.cols * mat.elemSize());
+    in.read((char *) mat.data, mat.rows * mat.step[0]);
 
     in.close();
     return mat;
