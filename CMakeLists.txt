@@ -9,9 +9,10 @@ set(CMAKE_CXX_COMPILER g++)
 # C++标准
 set(CMAKE_CXX_FLAGS "-std=c++11")
 # 指定opencv的路径
-#set(OpenCV_DIR "/usr/local/include")
+set(OpenCV_DIR "/usr/local/opencv342/share/OpenCV")
 # 寻找OpenCV库
 find_package(OpenCV REQUIRED)
+message(STATUS "OpenCV版本号：${OpenCV_VERSION}")
 #指定可执行文件的位置
 #set(CMAKE_RUNTIME_OUTPUT_DIRECTORY /home/creator/Projects/C++/REN/run/数据)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ../run)
