@@ -5,8 +5,16 @@
 ## 一、头文件列表
 1. CompareMats.h  
 CompareMats.h包含了一个类CompareMats。CompareMats
-的作用比对两个相同类型的Mat，并可以生成统计报告。已知
-bug，不能正确的比较类型为jpg格式的图片文件。
+的作用比对两个相同类型的Mat，并可以生成统计报告。安装freetype:
+   ```bash
+   sudo apt install libfreetype6-dev
+   ```
+   使用locate命令找到freetype的头文件目录：
+   ```bash
+   locate ft2build.h
+   ```
+   然后修改CMakeLists.txt中的include_directories("/usr/include/freetype2")
+   为上面输出的目录。
 2. MatIO.h  
 MatIO.h中包含了一个save函数和read函数，可以仅仅通过
 一个save函数和一个read函数就能完成任意类型的Mat的存储

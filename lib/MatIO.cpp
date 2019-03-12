@@ -16,11 +16,20 @@ namespace Utils {
     } MatHeader;
 }
 
-bool Utils::write(std::string fileName, cv::Mat src) {
+bool Utils::write(const std::string &fileName, const cv::Mat &src) {
     IF(!fileName.empty(), "文件名为空",false);
     IF(!src.empty(), "mat为空",false);
     IF(src.dims == 2,"不是二维Mat", false);
-    MatHeader matHeader{src.rows, src.cols, src.type()};
+
+    Mat _src;
+    // 保证mat是连续的
+    if (!src.isContinuous()){
+         _src = src.clone();
+    } else{
+        _src = src;
+    }
+
+    MatHeader matHeader{_src.rows, _src.cols, _src.type()};
 //    printf("%d %d %d\n",matHeader.rows,matHeader.cols,matHeader.type);
 
     //打开文件
@@ -37,7 +46,7 @@ bool Utils::write(std::string fileName, cv::Mat src) {
     //写入数据
     //http://blog.csdn.net/dcrmg/article/details/52294259
     //https://www.cnblogs.com/wangguchangqing/p/4016179.html
-    out.write((char *) src.data, src.rows * src.step[0]);
+    out.write((char *) _src.data, _src.rows * _src.step[0]);
 
     out.flush();
     out.close();
@@ -45,7 +54,7 @@ bool Utils::write(std::string fileName, cv::Mat src) {
     return true;
 }
 
-cv::Mat Utils::read(std::string fileName) {
+cv::Mat Utils::read(const std::string &fileName) {
     //打开文件
     ifstream in(fileName, ios::binary);
     IF(in.is_open(),"读取文件" + fileName + "失败",Mat());

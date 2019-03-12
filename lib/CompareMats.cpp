@@ -7,7 +7,7 @@ using namespace cv;
 using namespace std;
 using namespace Utils;
 
-CompareMats::CompareMats(const cv::Mat mat0, const cv::Mat mat1) :
+CompareMats::CompareMats(const cv::Mat &mat0, const cv::Mat &mat1):
         _sameCount(0), _differentCount(0), _same(true) {
     ASSERT(!mat0.empty(), "mat0指定的图片为空");
     ASSERT(!mat1.empty(), "mat1指定的图片为空");
@@ -43,16 +43,12 @@ std::string CompareMats::report() {
 
 }
 
-bool CompareMats::same() {
-    return _same;
-}
-
 /**
  * 比较Mat是否相同;
  * @param mat1 mat1
  * @param mat2 mat2
  */
-void CompareMats::compare(const Mat mat1, const Mat mat2) {
+void CompareMats::compare(const Mat &mat1, const Mat &mat2) {
     /**
      * 这个部分利用了非常巧妙的方式来比较不同类型的mat;不管mat里面存储的是单通道
      * 还是多通道，通道分量的类型uchar、int、float还是double，mat中的每个元素所
@@ -60,7 +56,6 @@ void CompareMats::compare(const Mat mat1, const Mat mat2) {
      * 较两个mat中对应位置的元素是否相等，可以先求得各自指向该元素的uchar数组的首
      * 地址，然后用一个for循环来比较这两个数组，若完全相同，则这两个mat中对应位置
      * 的元素是相等的，否则，不相等。
-     * 用来比较jpeg格式的图片时会出错。
      */
 
     //参考链接：http://blog.csdn.net/dcrmg/article/details/52294259
@@ -107,22 +102,6 @@ void CompareMats::compare(const Mat mat1, const Mat mat2) {
     }
 }
 
-Mat CompareMats::mask() {
-    return _mask;
-}
-
-vector<cv::Point> CompareMats::points() {
-    return _differentPoints;
-}
-
-long long CompareMats::sameCount() {
-    return _sameCount;
-}
-
-long long CompareMats::differentCount() {
-    return _differentCount;
-}
-
 void CompareMats::saveReport(std::string fileName) {
     ofstream o(fileName + ".txt");
 
@@ -148,3 +127,4 @@ void CompareMats::saveReport(std::string fileName) {
 
     cout << "报告已保存到" + fileName + ".txt和" + fileName + ".bmp" << endl;
 }
+

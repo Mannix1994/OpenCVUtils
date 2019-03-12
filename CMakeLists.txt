@@ -9,7 +9,7 @@ set(CMAKE_CXX_COMPILER g++)
 # C++标准
 set(CMAKE_CXX_FLAGS "-std=c++11")
 # 指定opencv的路径
-set(OpenCV_DIR "/usr/local/opencv342/share/OpenCV")
+set(OpenCV_DIR "/usr/local/opencv343/share/OpenCV")
 # 寻找OpenCV库
 find_package(OpenCV REQUIRED)
 message(STATUS "OpenCV版本号：${OpenCV_VERSION}")
@@ -19,7 +19,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ../run)
 # 包含OpenCV头文件目录
 include_directories(${OpenCV_INCLUDE_DIRS})
 # 包含freetype的头文件目录
-include_directories("/usr/local/include/freetype2")
+include_directories("/usr/include/freetype2")
 # 包含当前项目的头文件项目路径
 include_directories(lib)
 
