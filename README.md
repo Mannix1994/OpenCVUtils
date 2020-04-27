@@ -5,7 +5,15 @@
 ## 一、头文件列表
 1. CompareMats.h  
 CompareMats.h包含了一个类CompareMats。CompareMats
-的作用比对两个相同类型的Mat，并可以生成统计报告。安装freetype:
+的作用比对两个相同类型的Mat，并可以生成统计报告。
+2. MatIO.h  
+MatIO.h中包含了一个save函数和read函数，可以仅仅通过
+一个save函数和一个read函数就能完成任意类型的Mat的存储
+和读取。
+3. CvText.h  
+CvText.h中包含了一个类CvText。CvText的作用是解决OpenCV
+输出中文乱码的问题，经过测试，能完美显示中英文。这个类依赖于
+freetype库。安装freetype:
    ```bash
    sudo apt install libfreetype6-dev
    ```
@@ -15,14 +23,7 @@ CompareMats.h包含了一个类CompareMats。CompareMats
    ```
    然后修改CMakeLists.txt中的include_directories("/usr/include/freetype2")
    为上面输出的目录。
-2. MatIO.h  
-MatIO.h中包含了一个save函数和read函数，可以仅仅通过
-一个save函数和一个read函数就能完成任意类型的Mat的存储
-和读取。
-3. CvText.h  
-CvText.h中包含了一个类CvText。CvText的作用是解决OpenCV
-输出中文乱码的问题，经过测试，能完美显示中英文。这个类依赖于
-freetype库。
+   
 ## 二、如何使用
 使用前将头文件和对应的cpp文件拷贝到你的项目中。  
 1. CompareMats.h  
